@@ -51,12 +51,12 @@ export default function Chat() {
 
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
-    socket.on("foo", onChatMessage);
+    socket.on("chat_message", onChatMessage);
 
     return () => {
       socket.off("connect", onConnect);
       socket.off("disconnect", onDisconnect);
-      socket.off("foo", onChatMessage);
+      socket.off("chat_message", onChatMessage);
     };
   }, []);
 
