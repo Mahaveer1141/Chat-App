@@ -4,6 +4,7 @@ import MessageBox from "@/components/message_box";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { socket } from "@/lib/socket";
+import dynamic from "next/dynamic";
 
 interface IMessage {
   username: string;
@@ -12,11 +13,11 @@ interface IMessage {
   mine?: boolean;
 }
 
-export default function Chat() {
+function Chat() {
   const [inputMessage, setInputMessage] = useState("");
   const [username, setUsername] = useState("");
   const [messages, setMessages] = useState<IMessage[]>([]);
-  const [isConnected, setIsConnected] = useState(socket.connected);
+  const [isConnected, setIsConnected] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -33,6 +34,8 @@ export default function Chat() {
   }, []);
 
   useEffect(() => {
+    setIsConnected(socket.connected);
+
     function onConnect() {
       setIsConnected(true);
     }
@@ -134,3 +137,5 @@ export default function Chat() {
     </div>
   );
 }
+
+export default dynamic(() => Promise.resolve(Chat), { ssr: false });
