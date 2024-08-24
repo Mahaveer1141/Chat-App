@@ -8,9 +8,20 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        gradient: "linear-gradient(to top left,rgba(1,65,255,0),rgba(1,65,255,0),rgba(1,65,255,.3))"
-      }
+        gradient:
+          "linear-gradient(to top left,rgba(1,65,255,0),rgba(1,65,255,0),rgba(1,65,255,.3))",
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      const newUtilities = {
+        ".break-word": {
+          wordBreak: "break-word",
+        },
+      };
+
+      addUtilities(newUtilities, ["responsive", "hover"]);
+    },
+  ],
 };
